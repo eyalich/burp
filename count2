@@ -1,0 +1,28 @@
+import json
+
+def update_counter():
+    try:
+        # Read current count from the JSON file
+        with open('counter.json', 'r') as file:
+            data = json.load(file)
+            count = data.get('count', 0)
+
+        # Increment the count
+        count += 1
+
+        # Update JSON data with the new count
+        with open('counter.json', 'w') as file:
+            json.dump({'count': count}, file)
+
+        return count
+
+    except FileNotFoundError:
+        # If the file doesn't exist, create it with initial count
+        with open('counter.json', 'w') as file:
+            json.dump({'count': 1}, file)
+        return 1
+
+if __name__ == '__main__':
+    # Run the update_counter function and print the result
+    new_count = update_counter()
+    print(f'Total count: {new_count}')
